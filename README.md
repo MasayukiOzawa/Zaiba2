@@ -1,15 +1,18 @@
 # SQL Server Simple Monitoring Tool "Zaiba2"
-`Zaiba2` is a simple tool for obtaining SQL Server metrics in the Windows environment.  
+`Zaiba2` is a tool for easy collection of SQL Server metrics in a Windows environment.
 
-Components of [TICK Stack](https://www.influxdata.com/time-series-platform/) and PowerShell scripts enable metrics collection and visualization.  
+Collect and visualize metrics with the components of the [TICK Stack](https://www.influxdata.com/time-series-platform/)  and the PowerShell script.
 You can visualize information in SQL Server 2008 or later and SQL Database.
 ![Zaiba2](./Images/00.png)
 
-Get SQL Server metrics in `Zaiba2.ps1`, store them in `InfluxDB`, and visualize them in `Chronograf`.
+Get SQL Server metrics in `Zaiba2.ps1`, store them in `InfluxDB`, and visualize them in `Chronograf`.  
+Collecting metrics is done in a PowerShell script, so you can easily make changes.  
+(`Zaiba2.ps1` can also be run with a PowerShell Core.)
 ![Component](./Images/01.png)
 
+
+
 ## Setup
-***
 When running on Windows 10 / Windows Server 2016, setup can be executed by script.  
 You can setup it by running [Setup/Setup-Zaiba2.ps1](./Setup/Setup-Zaiba2.ps1).  
 (The file is stored in `C:\Zaiba2` by default)
@@ -20,7 +23,6 @@ If `Setup-Zaiba2.ps1` can not be executed normally, execute the InfluxDB and Chr
 [Running the TICK Stack on Windows](https://www.influxdata.com/blog/running-the-tick-stack-on-windows/)
 
 ## Let's Starting
-***
 First, start InfluxDB and Chronograf.
 Start two command prompts and execute the following command.
 ```
