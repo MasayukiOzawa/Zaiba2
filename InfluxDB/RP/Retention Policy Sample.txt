@@ -1,0 +1,5 @@
+-- https://docs.influxdata.com/influxdb/v1.7/guides/downsampling_and_retention/
+SHOW RETENTION POLICIES
+
+-- create 6 hour DEFAULT RP
+CREATE RETENTION POLICY "6h" ON "zaiba2" DURATION 6h REPLICATION 1 DEFAULT
