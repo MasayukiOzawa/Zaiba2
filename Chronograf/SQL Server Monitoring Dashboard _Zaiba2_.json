@@ -2,17 +2,17 @@
 	"meta": {
 		"chronografVersion": "1.7.3",
 		"sources": {
-			"1": {
+			"2": {
 				"name": "zaiba2",
-				"link": "/chronograf/v1/sources/1"
+				"link": "/chronograf/v1/sources/2"
 			}
 		}
 	},
 	"dashboard": {
-		"id": 2,
+		"id": 4,
 		"cells": [
 			{
-				"i": "1d9175fd-aa21-4262-8777-8da38169a050",
+				"i": "9097ec74-bce3-4e61-9f02-466c39b4d801",
 				"x": 6,
 				"y": 0,
 				"w": 1,
@@ -20,7 +20,7 @@
 				"name": "Worker",
 				"queries": [
 					{
-						"query": "SELECT \"current_workers_count\" FROM :InfluxDBName:.:RetentionPolicy:.\"workerthread\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName:",
+						"query": "SELECT \"current_workers_count\" FROM :InfluxDBName:.:RetentionPolicy:.\"workerthread\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND \"database_name\" = :DatabaseName: AND \"application_intent\" = :ApplicationIntent: ",
 						"queryConfig": {
 							"database": "",
 							"measurement": "",
@@ -32,11 +32,11 @@
 								"tags": []
 							},
 							"areTagsAccepted": false,
-							"rawText": "SELECT \"current_workers_count\" FROM :InfluxDBName:.:RetentionPolicy:.\"workerthread\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName:",
+							"rawText": "SELECT \"current_workers_count\" FROM :InfluxDBName:.:RetentionPolicy:.\"workerthread\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND \"database_name\" = :DatabaseName: AND \"application_intent\" = :ApplicationIntent: ",
 							"range": null,
 							"shifts": null
 						},
-						"source": "",
+						"source": "/chronograf/v1/sources/2",
 						"type": "influxql"
 					}
 				],
@@ -111,11 +111,11 @@
 				"note": "",
 				"noteVisibility": "default",
 				"links": {
-					"self": "/chronograf/v1/dashboards/2/cells/1d9175fd-aa21-4262-8777-8da38169a050"
+					"self": "/chronograf/v1/dashboards/4/cells/9097ec74-bce3-4e61-9f02-466c39b4d801"
 				}
 			},
 			{
-				"i": "5de53f11-efa4-476c-8509-07832144611a",
+				"i": "f7089e5c-c16a-4578-9237-1257aba57716",
 				"x": 10,
 				"y": 2,
 				"w": 2,
@@ -123,7 +123,7 @@
 				"name": "Lock Escalation",
 				"queries": [
 					{
-						"query": "SELECT DERIVATIVE(\"cntr_value\") FROM :InfluxDBName:.:RetentionPolicy:.\"Access Methods\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND  \"counter_name\"='Table Lock Escalations/sec'",
+						"query": "SELECT DERIVATIVE(\"cntr_value\") FROM :InfluxDBName:.:RetentionPolicy:.\"Access Methods\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND \"application_intent\" = :ApplicationIntent: AND \"counter_name\"='Table Lock Escalations/sec'",
 						"queryConfig": {
 							"database": "",
 							"measurement": "",
@@ -135,11 +135,11 @@
 								"tags": []
 							},
 							"areTagsAccepted": false,
-							"rawText": "SELECT DERIVATIVE(\"cntr_value\") FROM :InfluxDBName:.:RetentionPolicy:.\"Access Methods\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND  \"counter_name\"='Table Lock Escalations/sec'",
+							"rawText": "SELECT DERIVATIVE(\"cntr_value\") FROM :InfluxDBName:.:RetentionPolicy:.\"Access Methods\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND \"application_intent\" = :ApplicationIntent: AND \"counter_name\"='Table Lock Escalations/sec'",
 							"range": null,
 							"shifts": null
 						},
-						"source": "",
+						"source": "/chronograf/v1/sources/2",
 						"type": "influxql"
 					}
 				],
@@ -228,11 +228,11 @@
 				"note": "",
 				"noteVisibility": "default",
 				"links": {
-					"self": "/chronograf/v1/dashboards/2/cells/5de53f11-efa4-476c-8509-07832144611a"
+					"self": "/chronograf/v1/dashboards/4/cells/f7089e5c-c16a-4578-9237-1257aba57716"
 				}
 			},
 			{
-				"i": "1b8061f6-aa61-4cd5-89b4-1e468a0eb8e7",
+				"i": "44fba2fb-80fd-4270-ae5e-936a5cddfc0a",
 				"x": 6,
 				"y": 2,
 				"w": 2,
@@ -240,7 +240,7 @@
 				"name": "SQL Errors",
 				"queries": [
 					{
-						"query": "SELECT DERIVATIVE(\"cntr_value\") FROM :InfluxDBName:.:RetentionPolicy:.\"SQL Errors\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND \"instance_name\" != '_Total' AND \"instance_name\" != 'Info Errors' GROUP BY \"instance_name\"",
+						"query": "SELECT DERIVATIVE(\"cntr_value\") FROM :InfluxDBName:.:RetentionPolicy:.\"SQL Errors\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND \"application_intent\" = :ApplicationIntent: AND \"application_intent\" = :ApplicationIntent:  AND \"instance_name\" != '_Total' AND \"instance_name\" != 'Info Errors' GROUP BY \"instance_name\" ",
 						"queryConfig": {
 							"database": "",
 							"measurement": "",
@@ -252,11 +252,11 @@
 								"tags": []
 							},
 							"areTagsAccepted": false,
-							"rawText": "SELECT DERIVATIVE(\"cntr_value\") FROM :InfluxDBName:.:RetentionPolicy:.\"SQL Errors\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND \"instance_name\" != '_Total' AND \"instance_name\" != 'Info Errors' GROUP BY \"instance_name\"",
+							"rawText": "SELECT DERIVATIVE(\"cntr_value\") FROM :InfluxDBName:.:RetentionPolicy:.\"SQL Errors\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND \"application_intent\" = :ApplicationIntent: AND \"application_intent\" = :ApplicationIntent:  AND \"instance_name\" != '_Total' AND \"instance_name\" != 'Info Errors' GROUP BY \"instance_name\" ",
 							"range": null,
 							"shifts": null
 						},
-						"source": "",
+						"source": "/chronograf/v1/sources/2",
 						"type": "influxql"
 					}
 				],
@@ -345,11 +345,11 @@
 				"note": "",
 				"noteVisibility": "default",
 				"links": {
-					"self": "/chronograf/v1/dashboards/2/cells/1b8061f6-aa61-4cd5-89b4-1e468a0eb8e7"
+					"self": "/chronograf/v1/dashboards/4/cells/44fba2fb-80fd-4270-ae5e-936a5cddfc0a"
 				}
 			},
 			{
-				"i": "b5fbabc7-d562-4a3d-bff9-b850d05bfafe",
+				"i": "c98cf3a1-2e23-4f74-8f86-8cbd6061d7a3",
 				"x": 6,
 				"y": 8,
 				"w": 3,
@@ -357,7 +357,7 @@
 				"name": "Lock Waits/sec",
 				"queries": [
 					{
-						"query": "SELECT DERIVATIVE(\"cntr_value\") FROM :InfluxDBName:.:RetentionPolicy:.\"Locks\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND \"counter_name\"='Lock Waits/sec'AND \"instance_name\"<>'_Total' GROUP BY \"instance_name\"",
+						"query": "SELECT DERIVATIVE(\"cntr_value\") FROM :InfluxDBName:.:RetentionPolicy:.\"Locks\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND \"database_name\" = :DatabaseName: AND \"application_intent\" = :ApplicationIntent: AND \"counter_name\"='Lock Waits/sec'AND \"instance_name\"<>'_Total' GROUP BY \"instance_name\"",
 						"queryConfig": {
 							"database": "",
 							"measurement": "",
@@ -369,11 +369,11 @@
 								"tags": []
 							},
 							"areTagsAccepted": false,
-							"rawText": "SELECT DERIVATIVE(\"cntr_value\") FROM :InfluxDBName:.:RetentionPolicy:.\"Locks\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND \"counter_name\"='Lock Waits/sec'AND \"instance_name\"<>'_Total' GROUP BY \"instance_name\"",
+							"rawText": "SELECT DERIVATIVE(\"cntr_value\") FROM :InfluxDBName:.:RetentionPolicy:.\"Locks\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND \"database_name\" = :DatabaseName: AND \"application_intent\" = :ApplicationIntent: AND \"counter_name\"='Lock Waits/sec'AND \"instance_name\"<>'_Total' GROUP BY \"instance_name\"",
 							"range": null,
 							"shifts": null
 						},
-						"source": "",
+						"source": "/chronograf/v1/sources/2",
 						"type": "influxql"
 					}
 				],
@@ -472,11 +472,11 @@
 				"note": "",
 				"noteVisibility": "default",
 				"links": {
-					"self": "/chronograf/v1/dashboards/2/cells/b5fbabc7-d562-4a3d-bff9-b850d05bfafe"
+					"self": "/chronograf/v1/dashboards/4/cells/c98cf3a1-2e23-4f74-8f86-8cbd6061d7a3"
 				}
 			},
 			{
-				"i": "10880fd0-de32-4b42-9fed-42dcdd50d7e7",
+				"i": "f431d7c4-e5df-4460-9270-9f15f6c6f7a2",
 				"x": 9,
 				"y": 8,
 				"w": 3,
@@ -484,7 +484,7 @@
 				"name": "Lock Wait Time (ms)",
 				"queries": [
 					{
-						"query": "SELECT DERIVATIVE(\"cntr_value\") FROM  :InfluxDBName:.:RetentionPolicy:.\"Locks\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND  \"counter_name\"='Lock Wait Time (ms)'AND \"instance_name\"<>'_Total' GROUP BY \"instance_name\"",
+						"query": "SELECT DERIVATIVE(\"cntr_value\") FROM  :InfluxDBName:.:RetentionPolicy:.\"Locks\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND \"database_name\" = :DatabaseName: AND \"application_intent\" = :ApplicationIntent: AND  \"counter_name\"='Lock Wait Time (ms)'AND \"instance_name\"<>'_Total' GROUP BY \"instance_name\"",
 						"queryConfig": {
 							"database": "",
 							"measurement": "",
@@ -496,11 +496,11 @@
 								"tags": []
 							},
 							"areTagsAccepted": false,
-							"rawText": "SELECT DERIVATIVE(\"cntr_value\") FROM  :InfluxDBName:.:RetentionPolicy:.\"Locks\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND  \"counter_name\"='Lock Wait Time (ms)'AND \"instance_name\"<>'_Total' GROUP BY \"instance_name\"",
+							"rawText": "SELECT DERIVATIVE(\"cntr_value\") FROM  :InfluxDBName:.:RetentionPolicy:.\"Locks\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND \"database_name\" = :DatabaseName: AND \"application_intent\" = :ApplicationIntent: AND  \"counter_name\"='Lock Wait Time (ms)'AND \"instance_name\"<>'_Total' GROUP BY \"instance_name\"",
 							"range": null,
 							"shifts": null
 						},
-						"source": "",
+						"source": "/chronograf/v1/sources/2",
 						"type": "influxql"
 					}
 				],
@@ -599,11 +599,11 @@
 				"note": "",
 				"noteVisibility": "default",
 				"links": {
-					"self": "/chronograf/v1/dashboards/2/cells/10880fd0-de32-4b42-9fed-42dcdd50d7e7"
+					"self": "/chronograf/v1/dashboards/4/cells/f431d7c4-e5df-4460-9270-9f15f6c6f7a2"
 				}
 			},
 			{
-				"i": "987ba4b1-edd2-4b16-b0cb-4d67c8a738f5",
+				"i": "d6c1dd50-b978-4ece-810f-88c7e86dea34",
 				"x": 0,
 				"y": 8,
 				"w": 3,
@@ -611,7 +611,7 @@
 				"name": "Wait Stats Count",
 				"queries": [
 					{
-						"query": "SELECT DERIVATIVE(\"waiting_tasks_count\") FROM :InfluxDBName:.:RetentionPolicy:.\"waitstats\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: GROUP BY  \"wait_category\"",
+						"query": "SELECT DERIVATIVE(\"waiting_tasks_count\") FROM :InfluxDBName:.:RetentionPolicy:.\"waitstats\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND \"database_name\" = :DatabaseName: AND \"application_intent\" = :ApplicationIntent: GROUP BY  \"wait_category\"",
 						"queryConfig": {
 							"database": "",
 							"measurement": "",
@@ -623,11 +623,11 @@
 								"tags": []
 							},
 							"areTagsAccepted": false,
-							"rawText": "SELECT DERIVATIVE(\"waiting_tasks_count\") FROM :InfluxDBName:.:RetentionPolicy:.\"waitstats\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: GROUP BY  \"wait_category\"",
+							"rawText": "SELECT DERIVATIVE(\"waiting_tasks_count\") FROM :InfluxDBName:.:RetentionPolicy:.\"waitstats\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND \"database_name\" = :DatabaseName: AND \"application_intent\" = :ApplicationIntent: GROUP BY  \"wait_category\"",
 							"range": null,
 							"shifts": null
 						},
-						"source": "",
+						"source": "/chronograf/v1/sources/2",
 						"type": "influxql"
 					}
 				],
@@ -716,11 +716,11 @@
 				"note": "",
 				"noteVisibility": "default",
 				"links": {
-					"self": "/chronograf/v1/dashboards/2/cells/987ba4b1-edd2-4b16-b0cb-4d67c8a738f5"
+					"self": "/chronograf/v1/dashboards/4/cells/d6c1dd50-b978-4ece-810f-88c7e86dea34"
 				}
 			},
 			{
-				"i": "bbebc5d3-0af9-4288-90ed-854f78a69e39",
+				"i": "0a067f2e-2670-4257-ba67-5f8f42876a76",
 				"x": 3,
 				"y": 8,
 				"w": 3,
@@ -728,7 +728,7 @@
 				"name": "Wait Stats Time (ms)",
 				"queries": [
 					{
-						"query": "SELECT DERIVATIVE(\"wait_time_ms\") FROM :InfluxDBName:.:RetentionPolicy:.\"waitstats\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: GROUP BY  \"wait_category\"",
+						"query": "SELECT DERIVATIVE(\"wait_time_ms\") FROM :InfluxDBName:.:RetentionPolicy:.\"waitstats\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND \"database_name\" = :DatabaseName: AND \"application_intent\" = :ApplicationIntent:  GROUP BY  \"wait_category\"",
 						"queryConfig": {
 							"database": "",
 							"measurement": "",
@@ -740,11 +740,11 @@
 								"tags": []
 							},
 							"areTagsAccepted": false,
-							"rawText": "SELECT DERIVATIVE(\"wait_time_ms\") FROM :InfluxDBName:.:RetentionPolicy:.\"waitstats\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: GROUP BY  \"wait_category\"",
+							"rawText": "SELECT DERIVATIVE(\"wait_time_ms\") FROM :InfluxDBName:.:RetentionPolicy:.\"waitstats\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND \"database_name\" = :DatabaseName: AND \"application_intent\" = :ApplicationIntent:  GROUP BY  \"wait_category\"",
 							"range": null,
 							"shifts": null
 						},
-						"source": "",
+						"source": "/chronograf/v1/sources/2",
 						"type": "influxql"
 					}
 				],
@@ -833,11 +833,11 @@
 				"note": "",
 				"noteVisibility": "default",
 				"links": {
-					"self": "/chronograf/v1/dashboards/2/cells/bbebc5d3-0af9-4288-90ed-854f78a69e39"
+					"self": "/chronograf/v1/dashboards/4/cells/0a067f2e-2670-4257-ba67-5f8f42876a76"
 				}
 			},
 			{
-				"i": "e518d3d0-7cf6-4031-82b7-2cb76cde4f30",
+				"i": "ed8d9d7b-eb97-4729-8871-0c75814d476b",
 				"x": 6,
 				"y": 6,
 				"w": 6,
@@ -845,7 +845,7 @@
 				"name": "Waiting Task Chart",
 				"queries": [
 					{
-						"query": "SELECT mean(\"elapsed_time_sec\") AS \"mean_elapsed_time_sec\", mean(\"transaction_elapsed_time_sec\") AS \"mean_transaction_elapsed_time_sec\" FROM :InfluxDBName:.:RetentionPolicy:.\"waittask\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND \"session_id\" > :SessionId: GROUP BY time(5s), \"session_id\"",
+						"query": "SELECT mean(\"elapsed_time_sec\") AS \"mean_elapsed_time_sec\", mean(\"transaction_elapsed_time_sec\") AS \"mean_transaction_elapsed_time_sec\" FROM :InfluxDBName:.:RetentionPolicy:.\"waittask\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND \"database_name\" = :DatabaseName: AND \"session_id\" > :SessionId: AND \"application_intent\" = :ApplicationIntent:  GROUP BY time(5s), \"session_id\"",
 						"queryConfig": {
 							"database": "",
 							"measurement": "",
@@ -857,11 +857,11 @@
 								"tags": []
 							},
 							"areTagsAccepted": false,
-							"rawText": "SELECT mean(\"elapsed_time_sec\") AS \"mean_elapsed_time_sec\", mean(\"transaction_elapsed_time_sec\") AS \"mean_transaction_elapsed_time_sec\" FROM :InfluxDBName:.:RetentionPolicy:.\"waittask\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND \"session_id\" > :SessionId: GROUP BY time(5s), \"session_id\"",
+							"rawText": "SELECT mean(\"elapsed_time_sec\") AS \"mean_elapsed_time_sec\", mean(\"transaction_elapsed_time_sec\") AS \"mean_transaction_elapsed_time_sec\" FROM :InfluxDBName:.:RetentionPolicy:.\"waittask\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND \"database_name\" = :DatabaseName: AND \"session_id\" > :SessionId: AND \"application_intent\" = :ApplicationIntent:  GROUP BY time(5s), \"session_id\"",
 							"range": null,
 							"shifts": null
 						},
-						"source": "",
+						"source": "/chronograf/v1/sources/2",
 						"type": "influxql"
 					}
 				],
@@ -950,11 +950,11 @@
 				"note": "",
 				"noteVisibility": "default",
 				"links": {
-					"self": "/chronograf/v1/dashboards/2/cells/e518d3d0-7cf6-4031-82b7-2cb76cde4f30"
+					"self": "/chronograf/v1/dashboards/4/cells/ed8d9d7b-eb97-4729-8871-0c75814d476b"
 				}
 			},
 			{
-				"i": "45178153-9bd4-4378-affd-50cff6097c17",
+				"i": "e7741d73-984f-4901-be77-2e8cdee002f9",
 				"x": 6,
 				"y": 1,
 				"w": 2,
@@ -962,7 +962,7 @@
 				"name": "Waiting Task ",
 				"queries": [
 					{
-						"query": "SELECT COUNT(*) FROM :InfluxDBName:.:RetentionPolicy:.waittask WHERE time >= now() - 7s AND \"server_name\" = :ServerName: AND \"elapsed_time_sec\" > :ElapsedTime: AND \"session_id\" > :SessionId:",
+						"query": "SELECT COUNT(*) FROM :InfluxDBName:.:RetentionPolicy:.waittask WHERE time >= now() - 7s AND \"server_name\" = :ServerName: AND \"elapsed_time_sec\" > :ElapsedTime: AND \"session_id\" > :SessionId: AND \"application_intent\" = :ApplicationIntent: AND \"application_intent\" = :ApplicationIntent: ",
 						"queryConfig": {
 							"database": "",
 							"measurement": "",
@@ -974,11 +974,11 @@
 								"tags": []
 							},
 							"areTagsAccepted": false,
-							"rawText": "SELECT COUNT(*) FROM :InfluxDBName:.:RetentionPolicy:.waittask WHERE time >= now() - 7s AND \"server_name\" = :ServerName: AND \"elapsed_time_sec\" > :ElapsedTime: AND \"session_id\" > :SessionId:",
+							"rawText": "SELECT COUNT(*) FROM :InfluxDBName:.:RetentionPolicy:.waittask WHERE time >= now() - 7s AND \"server_name\" = :ServerName: AND \"elapsed_time_sec\" > :ElapsedTime: AND \"session_id\" > :SessionId: AND \"application_intent\" = :ApplicationIntent: AND \"application_intent\" = :ApplicationIntent: ",
 							"range": null,
 							"shifts": null
 						},
-						"source": "",
+						"source": "/chronograf/v1/sources/2",
 						"type": "influxql"
 					}
 				],
@@ -1063,11 +1063,11 @@
 				"note": "",
 				"noteVisibility": "default",
 				"links": {
-					"self": "/chronograf/v1/dashboards/2/cells/45178153-9bd4-4378-affd-50cff6097c17"
+					"self": "/chronograf/v1/dashboards/4/cells/e7741d73-984f-4901-be77-2e8cdee002f9"
 				}
 			},
 			{
-				"i": "20ad11b9-6a25-4ce8-b405-7c7dad38a9e1",
+				"i": "e850bbb9-b97c-4c19-ace9-1487151f7022",
 				"x": 6,
 				"y": 4,
 				"w": 6,
@@ -1075,7 +1075,7 @@
 				"name": "Waiting Task",
 				"queries": [
 					{
-						"query": "SELECT \"session_id\",\"elapsed_time_sec\", \"transaction_elapsed_time_sec\" , \"wait_type\", \"command\", \"host_name\" FROM :InfluxDBName:.:RetentionPolicy:.waittask WHERE time >= now() - 7s AND \"server_name\" = :ServerName:  AND \"elapsed_time_sec\" > :ElapsedTime: AND \"session_id\" > :SessionId: GROUP BY \"session_id\" ORDER BY time DESC ",
+						"query": "SELECT \"session_id\",\"elapsed_time_sec\", \"transaction_elapsed_time_sec\" , \"wait_type\", \"command\", \"host_name\" FROM :InfluxDBName:.:RetentionPolicy:.waittask WHERE time >= now() - 7s AND \"server_name\" = :ServerName: AND \"database_name\" = :DatabaseName: AND \"application_intent\" = :ApplicationIntent: AND \"elapsed_time_sec\" > :ElapsedTime: AND \"session_id\" > :SessionId: GROUP BY \"session_id\" ORDER BY time DESC ",
 						"queryConfig": {
 							"database": "",
 							"measurement": "",
@@ -1087,11 +1087,11 @@
 								"tags": []
 							},
 							"areTagsAccepted": false,
-							"rawText": "SELECT \"session_id\",\"elapsed_time_sec\", \"transaction_elapsed_time_sec\" , \"wait_type\", \"command\", \"host_name\" FROM :InfluxDBName:.:RetentionPolicy:.waittask WHERE time >= now() - 7s AND \"server_name\" = :ServerName:  AND \"elapsed_time_sec\" > :ElapsedTime: AND \"session_id\" > :SessionId: GROUP BY \"session_id\" ORDER BY time DESC ",
+							"rawText": "SELECT \"session_id\",\"elapsed_time_sec\", \"transaction_elapsed_time_sec\" , \"wait_type\", \"command\", \"host_name\" FROM :InfluxDBName:.:RetentionPolicy:.waittask WHERE time >= now() - 7s AND \"server_name\" = :ServerName: AND \"database_name\" = :DatabaseName: AND \"application_intent\" = :ApplicationIntent: AND \"elapsed_time_sec\" > :ElapsedTime: AND \"session_id\" > :SessionId: GROUP BY \"session_id\" ORDER BY time DESC ",
 							"range": null,
 							"shifts": null
 						},
-						"source": "",
+						"source": "/chronograf/v1/sources/2",
 						"type": "influxql"
 					}
 				],
@@ -1201,11 +1201,11 @@
 				"note": "",
 				"noteVisibility": "default",
 				"links": {
-					"self": "/chronograf/v1/dashboards/2/cells/20ad11b9-6a25-4ce8-b405-7c7dad38a9e1"
+					"self": "/chronograf/v1/dashboards/4/cells/e850bbb9-b97c-4c19-ace9-1487151f7022"
 				}
 			},
 			{
-				"i": "76360a24-e96f-447e-b122-1f4d963f531a",
+				"i": "de46f109-84be-48c5-a50c-035381353487",
 				"x": 10,
 				"y": 0,
 				"w": 2,
@@ -1213,7 +1213,7 @@
 				"name": "User Connection",
 				"queries": [
 					{
-						"query": "SELECT \"cntr_value\" FROM :InfluxDBName:.:RetentionPolicy:.\"General Statistics\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND \"counter_name\"='User Connections'",
+						"query": "SELECT \"cntr_value\" FROM :InfluxDBName:.:RetentionPolicy:.\"General Statistics\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName:  AND \"database_name\" = :DatabaseName: AND \"application_intent\" = :ApplicationIntent: AND \"counter_name\"='User Connections'",
 						"queryConfig": {
 							"database": "",
 							"measurement": "",
@@ -1225,11 +1225,11 @@
 								"tags": []
 							},
 							"areTagsAccepted": false,
-							"rawText": "SELECT \"cntr_value\" FROM :InfluxDBName:.:RetentionPolicy:.\"General Statistics\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND \"counter_name\"='User Connections'",
+							"rawText": "SELECT \"cntr_value\" FROM :InfluxDBName:.:RetentionPolicy:.\"General Statistics\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName:  AND \"database_name\" = :DatabaseName: AND \"application_intent\" = :ApplicationIntent: AND \"counter_name\"='User Connections'",
 							"range": null,
 							"shifts": null
 						},
-						"source": "",
+						"source": "/chronograf/v1/sources/2",
 						"type": "influxql"
 					}
 				],
@@ -1318,11 +1318,11 @@
 				"note": "",
 				"noteVisibility": "default",
 				"links": {
-					"self": "/chronograf/v1/dashboards/2/cells/76360a24-e96f-447e-b122-1f4d963f531a"
+					"self": "/chronograf/v1/dashboards/4/cells/de46f109-84be-48c5-a50c-035381353487"
 				}
 			},
 			{
-				"i": "eaea2159-f1f8-4f1b-9c45-3bcbf01795cd",
+				"i": "78273e18-0ce6-41f5-9ad5-1a9a6b5b57b9",
 				"x": 8,
 				"y": 2,
 				"w": 2,
@@ -1330,7 +1330,7 @@
 				"name": "Blocked Process",
 				"queries": [
 					{
-						"query": "SELECT \"cntr_value\" FROM :InfluxDBName:.:RetentionPolicy:.\"General Statistics\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND \"counter_name\"='Processes blocked'",
+						"query": "SELECT \"cntr_value\" FROM :InfluxDBName:.:RetentionPolicy:.\"General Statistics\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND \"application_intent\" = :ApplicationIntent: AND \"counter_name\"='Processes blocked'",
 						"queryConfig": {
 							"database": "",
 							"measurement": "",
@@ -1342,11 +1342,11 @@
 								"tags": []
 							},
 							"areTagsAccepted": false,
-							"rawText": "SELECT \"cntr_value\" FROM :InfluxDBName:.:RetentionPolicy:.\"General Statistics\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND \"counter_name\"='Processes blocked'",
+							"rawText": "SELECT \"cntr_value\" FROM :InfluxDBName:.:RetentionPolicy:.\"General Statistics\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND \"application_intent\" = :ApplicationIntent: AND \"counter_name\"='Processes blocked'",
 							"range": null,
 							"shifts": null
 						},
-						"source": "",
+						"source": "/chronograf/v1/sources/2",
 						"type": "influxql"
 					}
 				],
@@ -1470,11 +1470,11 @@
 				"note": "",
 				"noteVisibility": "default",
 				"links": {
-					"self": "/chronograf/v1/dashboards/2/cells/eaea2159-f1f8-4f1b-9c45-3bcbf01795cd"
+					"self": "/chronograf/v1/dashboards/4/cells/78273e18-0ce6-41f5-9ad5-1a9a6b5b57b9"
 				}
 			},
 			{
-				"i": "48656335-6358-4e6c-8961-b43ef3277848",
+				"i": "a8ee905e-92bf-4ad8-9b7d-ee996401b8cd",
 				"x": 7,
 				"y": 0,
 				"w": 1,
@@ -1482,7 +1482,7 @@
 				"name": "Current Task",
 				"queries": [
 					{
-						"query": "SELECT \"current_tasks_count\" FROM :InfluxDBName:.:RetentionPolicy:.\"workerthread\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName:",
+						"query": "SELECT \"current_tasks_count\" FROM :InfluxDBName:.:RetentionPolicy:.\"workerthread\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND \"database_name\" = :DatabaseName: AND \"application_intent\" = :ApplicationIntent: ",
 						"queryConfig": {
 							"database": "",
 							"measurement": "",
@@ -1494,11 +1494,11 @@
 								"tags": []
 							},
 							"areTagsAccepted": false,
-							"rawText": "SELECT \"current_tasks_count\" FROM :InfluxDBName:.:RetentionPolicy:.\"workerthread\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName:",
+							"rawText": "SELECT \"current_tasks_count\" FROM :InfluxDBName:.:RetentionPolicy:.\"workerthread\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND \"database_name\" = :DatabaseName: AND \"application_intent\" = :ApplicationIntent: ",
 							"range": null,
 							"shifts": null
 						},
-						"source": "",
+						"source": "/chronograf/v1/sources/2",
 						"type": "influxql"
 					}
 				],
@@ -1573,11 +1573,11 @@
 				"note": "",
 				"noteVisibility": "default",
 				"links": {
-					"self": "/chronograf/v1/dashboards/2/cells/48656335-6358-4e6c-8961-b43ef3277848"
+					"self": "/chronograf/v1/dashboards/4/cells/a8ee905e-92bf-4ad8-9b7d-ee996401b8cd"
 				}
 			},
 			{
-				"i": "0ef63347-09f6-479b-bc40-203d2b918110",
+				"i": "3c9757ff-e519-4461-9973-c9501238ae1f",
 				"x": 8,
 				"y": 0,
 				"w": 2,
@@ -1585,7 +1585,7 @@
 				"name": "Worker Thread",
 				"queries": [
 					{
-						"query": "SELECT \"current_tasks_count\", \"active_workers_count\", \"current_workers_count\", \"max_workers_count\", \"runnable_tasks_count\", \"work_queue_count\" FROM :InfluxDBName:.:RetentionPolicy:.\"workerthread\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName:",
+						"query": "SELECT \"current_tasks_count\", \"active_workers_count\", \"current_workers_count\", \"max_workers_count\", \"runnable_tasks_count\", \"work_queue_count\" FROM :InfluxDBName:.:RetentionPolicy:.\"workerthread\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND \"database_name\" = :DatabaseName: AND \"application_intent\" = :ApplicationIntent: ",
 						"queryConfig": {
 							"database": "",
 							"measurement": "",
@@ -1597,11 +1597,11 @@
 								"tags": []
 							},
 							"areTagsAccepted": false,
-							"rawText": "SELECT \"current_tasks_count\", \"active_workers_count\", \"current_workers_count\", \"max_workers_count\", \"runnable_tasks_count\", \"work_queue_count\" FROM :InfluxDBName:.:RetentionPolicy:.\"workerthread\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName:",
+							"rawText": "SELECT \"current_tasks_count\", \"active_workers_count\", \"current_workers_count\", \"max_workers_count\", \"runnable_tasks_count\", \"work_queue_count\" FROM :InfluxDBName:.:RetentionPolicy:.\"workerthread\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND \"database_name\" = :DatabaseName: AND \"application_intent\" = :ApplicationIntent: ",
 							"range": null,
 							"shifts": null
 						},
-						"source": "",
+						"source": "/chronograf/v1/sources/2",
 						"type": "influxql"
 					}
 				],
@@ -1690,11 +1690,11 @@
 				"note": "",
 				"noteVisibility": "default",
 				"links": {
-					"self": "/chronograf/v1/dashboards/2/cells/0ef63347-09f6-479b-bc40-203d2b918110"
+					"self": "/chronograf/v1/dashboards/4/cells/3c9757ff-e519-4461-9973-c9501238ae1f"
 				}
 			},
 			{
-				"i": "c03121f7-46f6-4258-b358-fc933118d4d0",
+				"i": "c0196f2f-91c8-418d-bf8c-3572fdde1bc5",
 				"x": 2,
 				"y": 6,
 				"w": 2,
@@ -1702,7 +1702,7 @@
 				"name": "Write  / sec",
 				"queries": [
 					{
-						"query": "SELECT  DERIVATIVE(\"num_of_writes\") AS \"num_of_writes\"  FROM :InfluxDBName:.:RetentionPolicy:.\"filestats\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName:  GROUP BY \"database_name\", \"file_id\"",
+						"query": "SELECT  DERIVATIVE(\"num_of_writes\") AS \"num_of_writes\"  FROM :InfluxDBName:.:RetentionPolicy:.\"filestats\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND \"database_name\" = :DatabaseName: AND \"application_intent\" = :ApplicationIntent: GROUP BY \"file_database_name\", \"file_id\"",
 						"queryConfig": {
 							"database": "",
 							"measurement": "",
@@ -1714,11 +1714,11 @@
 								"tags": []
 							},
 							"areTagsAccepted": false,
-							"rawText": "SELECT  DERIVATIVE(\"num_of_writes\") AS \"num_of_writes\"  FROM :InfluxDBName:.:RetentionPolicy:.\"filestats\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName:  GROUP BY \"database_name\", \"file_id\"",
+							"rawText": "SELECT  DERIVATIVE(\"num_of_writes\") AS \"num_of_writes\"  FROM :InfluxDBName:.:RetentionPolicy:.\"filestats\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND \"database_name\" = :DatabaseName: AND \"application_intent\" = :ApplicationIntent: GROUP BY \"file_database_name\", \"file_id\"",
 							"range": null,
 							"shifts": null
 						},
-						"source": "",
+						"source": "/chronograf/v1/sources/2",
 						"type": "influxql"
 					}
 				],
@@ -1827,11 +1827,11 @@
 				"note": "",
 				"noteVisibility": "default",
 				"links": {
-					"self": "/chronograf/v1/dashboards/2/cells/c03121f7-46f6-4258-b358-fc933118d4d0"
+					"self": "/chronograf/v1/dashboards/4/cells/c0196f2f-91c8-418d-bf8c-3572fdde1bc5"
 				}
 			},
 			{
-				"i": "69307c9e-23a6-48b4-a9e5-251fe4c555ef",
+				"i": "c7270217-bfd5-493e-92dd-f5c294faaa0f",
 				"x": 2,
 				"y": 4,
 				"w": 2,
@@ -1839,7 +1839,7 @@
 				"name": "Read / sec",
 				"queries": [
 					{
-						"query": "SELECT  DERIVATIVE(\"num_of_reads\") AS \"num_of_reads\"  FROM :InfluxDBName:.:RetentionPolicy:.\"filestats\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: GROUP BY \"database_name\", \"file_id\"",
+						"query": "SELECT  DERIVATIVE(\"num_of_reads\") AS \"num_of_reads\"  FROM :InfluxDBName:.:RetentionPolicy:.\"filestats\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND \"database_name\" = :DatabaseName: AND \"application_intent\" = :ApplicationIntent:  GROUP BY \"file_database_name\", \"file_id\" ",
 						"queryConfig": {
 							"database": "",
 							"measurement": "",
@@ -1851,11 +1851,11 @@
 								"tags": []
 							},
 							"areTagsAccepted": false,
-							"rawText": "SELECT  DERIVATIVE(\"num_of_reads\") AS \"num_of_reads\"  FROM :InfluxDBName:.:RetentionPolicy:.\"filestats\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: GROUP BY \"database_name\", \"file_id\"",
+							"rawText": "SELECT  DERIVATIVE(\"num_of_reads\") AS \"num_of_reads\"  FROM :InfluxDBName:.:RetentionPolicy:.\"filestats\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND \"database_name\" = :DatabaseName: AND \"application_intent\" = :ApplicationIntent:  GROUP BY \"file_database_name\", \"file_id\" ",
 							"range": null,
 							"shifts": null
 						},
-						"source": "",
+						"source": "/chronograf/v1/sources/2",
 						"type": "influxql"
 					}
 				],
@@ -1964,11 +1964,11 @@
 				"note": "",
 				"noteVisibility": "default",
 				"links": {
-					"self": "/chronograf/v1/dashboards/2/cells/69307c9e-23a6-48b4-a9e5-251fe4c555ef"
+					"self": "/chronograf/v1/dashboards/4/cells/c7270217-bfd5-493e-92dd-f5c294faaa0f"
 				}
 			},
 			{
-				"i": "18bbda02-6b46-46a0-840f-36090837c51d",
+				"i": "eb47516f-67fa-4019-bf8c-e4c273b03caa",
 				"x": 4,
 				"y": 4,
 				"w": 2,
@@ -1976,7 +1976,7 @@
 				"name": "Buffer Manager",
 				"queries": [
 					{
-						"query": "SELECT DERIVATIVE(\"cntr_value\") * 8 * 1024 AS \"cntr_value\" FROM :InfluxDBName:.:RetentionPolicy:.\"Buffer Manager\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND (\"counter_name\"='Page lookups/sec' OR \"counter_name\"='Page reads/sec' OR \"counter_name\"='Page writes/sec' OR \"counter_name\"='Readahead pages/sec')  GROUP BY \"counter_name\"",
+						"query": "SELECT DERIVATIVE(\"cntr_value\") * 8 * 1024 AS \"cntr_value\" FROM :InfluxDBName:.:RetentionPolicy:.\"Buffer Manager\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND \"database_name\" = :DatabaseName: AND \"application_intent\" = :ApplicationIntent: AND (\"counter_name\"='Page lookups/sec' OR \"counter_name\"='Page reads/sec' OR \"counter_name\"='Page writes/sec' OR \"counter_name\"='Readahead pages/sec')  GROUP BY \"counter_name\"",
 						"queryConfig": {
 							"database": "",
 							"measurement": "",
@@ -1988,11 +1988,11 @@
 								"tags": []
 							},
 							"areTagsAccepted": false,
-							"rawText": "SELECT DERIVATIVE(\"cntr_value\") * 8 * 1024 AS \"cntr_value\" FROM :InfluxDBName:.:RetentionPolicy:.\"Buffer Manager\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND (\"counter_name\"='Page lookups/sec' OR \"counter_name\"='Page reads/sec' OR \"counter_name\"='Page writes/sec' OR \"counter_name\"='Readahead pages/sec')  GROUP BY \"counter_name\"",
+							"rawText": "SELECT DERIVATIVE(\"cntr_value\") * 8 * 1024 AS \"cntr_value\" FROM :InfluxDBName:.:RetentionPolicy:.\"Buffer Manager\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND \"database_name\" = :DatabaseName: AND \"application_intent\" = :ApplicationIntent: AND (\"counter_name\"='Page lookups/sec' OR \"counter_name\"='Page reads/sec' OR \"counter_name\"='Page writes/sec' OR \"counter_name\"='Readahead pages/sec')  GROUP BY \"counter_name\"",
 							"range": null,
 							"shifts": null
 						},
-						"source": "",
+						"source": "/chronograf/v1/sources/2",
 						"type": "influxql"
 					}
 				],
@@ -2091,11 +2091,11 @@
 				"note": "",
 				"noteVisibility": "default",
 				"links": {
-					"self": "/chronograf/v1/dashboards/2/cells/18bbda02-6b46-46a0-840f-36090837c51d"
+					"self": "/chronograf/v1/dashboards/4/cells/eb47516f-67fa-4019-bf8c-e4c273b03caa"
 				}
 			},
 			{
-				"i": "e88791e2-f622-48e0-8394-ea4ab34c017b",
+				"i": "9adedd20-fdd6-4d8a-bb45-14662684bcbe",
 				"x": 0,
 				"y": 2,
 				"w": 6,
@@ -2103,7 +2103,7 @@
 				"name": "CPU Usage",
 				"queries": [
 					{
-						"query": "SELECT CPU_Usage * 100 AS \"CPU_Usage\" FROM :InfluxDBName:.:RetentionPolicy:.\"cpustats\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: GROUP BY instance_name",
+						"query": "SELECT CPU_Usage * 100 AS \"CPU_Usage\" FROM :InfluxDBName:.:RetentionPolicy:.\"cpustats\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND \"application_intent\" = :ApplicationIntent: GROUP BY instance_name",
 						"queryConfig": {
 							"database": "",
 							"measurement": "",
@@ -2115,11 +2115,11 @@
 								"tags": []
 							},
 							"areTagsAccepted": false,
-							"rawText": "SELECT CPU_Usage * 100 AS \"CPU_Usage\" FROM :InfluxDBName:.:RetentionPolicy:.\"cpustats\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: GROUP BY instance_name",
+							"rawText": "SELECT CPU_Usage * 100 AS \"CPU_Usage\" FROM :InfluxDBName:.:RetentionPolicy:.\"cpustats\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND \"application_intent\" = :ApplicationIntent: GROUP BY instance_name",
 							"range": null,
 							"shifts": null
 						},
-						"source": "",
+						"source": "/chronograf/v1/sources/2",
 						"type": "influxql"
 					}
 				],
@@ -2218,11 +2218,11 @@
 				"note": "",
 				"noteVisibility": "default",
 				"links": {
-					"self": "/chronograf/v1/dashboards/2/cells/e88791e2-f622-48e0-8394-ea4ab34c017b"
+					"self": "/chronograf/v1/dashboards/4/cells/9adedd20-fdd6-4d8a-bb45-14662684bcbe"
 				}
 			},
 			{
-				"i": "58136c0a-20b1-474f-8a14-8dacb58ebe5d",
+				"i": "93c2dd34-8d1b-4aa5-be1c-376093625aec",
 				"x": 0,
 				"y": 6,
 				"w": 2,
@@ -2230,7 +2230,7 @@
 				"name": "Write Bytes / sec ",
 				"queries": [
 					{
-						"query": "SELECT  DERIVATIVE(\"num_of_bytes_written\") AS \"num_of_bytes_written\"  FROM :InfluxDBName:.:RetentionPolicy:.\"filestats\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: GROUP BY \"database_name\", \"file_id\"",
+						"query": "SELECT  DERIVATIVE(\"num_of_bytes_written\") AS \"num_of_bytes_written\"  FROM :InfluxDBName:.:RetentionPolicy:.\"filestats\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND \"database_name\" = :DatabaseName: AND \"application_intent\" = :ApplicationIntent: GROUP BY \"file_database_name\", \"file_id\"",
 						"queryConfig": {
 							"database": "",
 							"measurement": "",
@@ -2242,11 +2242,11 @@
 								"tags": []
 							},
 							"areTagsAccepted": false,
-							"rawText": "SELECT  DERIVATIVE(\"num_of_bytes_written\") AS \"num_of_bytes_written\"  FROM :InfluxDBName:.:RetentionPolicy:.\"filestats\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: GROUP BY \"database_name\", \"file_id\"",
+							"rawText": "SELECT  DERIVATIVE(\"num_of_bytes_written\") AS \"num_of_bytes_written\"  FROM :InfluxDBName:.:RetentionPolicy:.\"filestats\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND \"database_name\" = :DatabaseName: AND \"application_intent\" = :ApplicationIntent: GROUP BY \"file_database_name\", \"file_id\"",
 							"range": null,
 							"shifts": null
 						},
-						"source": "",
+						"source": "/chronograf/v1/sources/2",
 						"type": "influxql"
 					}
 				],
@@ -2355,11 +2355,11 @@
 				"note": "",
 				"noteVisibility": "default",
 				"links": {
-					"self": "/chronograf/v1/dashboards/2/cells/58136c0a-20b1-474f-8a14-8dacb58ebe5d"
+					"self": "/chronograf/v1/dashboards/4/cells/93c2dd34-8d1b-4aa5-be1c-376093625aec"
 				}
 			},
 			{
-				"i": "4e3bf535-58f9-4890-968f-5e0d22ef4f82",
+				"i": "1baad11a-12d2-4309-9289-f7aa77151231",
 				"x": 0,
 				"y": 4,
 				"w": 2,
@@ -2367,7 +2367,7 @@
 				"name": "Read Bytes / sec",
 				"queries": [
 					{
-						"query": "SELECT  DERIVATIVE(\"num_of_bytes_read\") AS \"num_of_bytes_read\"  FROM :InfluxDBName:.:RetentionPolicy:.\"filestats\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: GROUP BY \"database_name\", \"file_id\"",
+						"query": "SELECT  DERIVATIVE(\"num_of_bytes_read\") AS \"num_of_bytes_read\" FROM :InfluxDBName:.:RetentionPolicy:.\"filestats\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND \"database_name\" = :DatabaseName: AND \"application_intent\" = :ApplicationIntent: GROUP BY \"file_database_name\", \"file_id\"",
 						"queryConfig": {
 							"database": "",
 							"measurement": "",
@@ -2379,11 +2379,11 @@
 								"tags": []
 							},
 							"areTagsAccepted": false,
-							"rawText": "SELECT  DERIVATIVE(\"num_of_bytes_read\") AS \"num_of_bytes_read\"  FROM :InfluxDBName:.:RetentionPolicy:.\"filestats\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: GROUP BY \"database_name\", \"file_id\"",
+							"rawText": "SELECT  DERIVATIVE(\"num_of_bytes_read\") AS \"num_of_bytes_read\" FROM :InfluxDBName:.:RetentionPolicy:.\"filestats\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND \"database_name\" = :DatabaseName: AND \"application_intent\" = :ApplicationIntent: GROUP BY \"file_database_name\", \"file_id\"",
 							"range": null,
 							"shifts": null
 						},
-						"source": "",
+						"source": "/chronograf/v1/sources/2",
 						"type": "influxql"
 					}
 				],
@@ -2492,11 +2492,11 @@
 				"note": "",
 				"noteVisibility": "default",
 				"links": {
-					"self": "/chronograf/v1/dashboards/2/cells/4e3bf535-58f9-4890-968f-5e0d22ef4f82"
+					"self": "/chronograf/v1/dashboards/4/cells/1baad11a-12d2-4309-9289-f7aa77151231"
 				}
 			},
 			{
-				"i": "80e3a68a-1b69-4e06-81a8-c90cace6ed38",
+				"i": "3dfca818-b6ca-4673-bf18-9dd7a79c7b7f",
 				"x": 0,
 				"y": 0,
 				"w": 6,
@@ -2504,7 +2504,7 @@
 				"name": "Batch Request/sec",
 				"queries": [
 					{
-						"query": "SELECT DERIVATIVE(\"cntr_value\") AS \"Batch Requests/sec\" FROM :InfluxDBName:.:RetentionPolicy:.\"SQL Statistics\" WHERE time > :dashboardTime:  AND \"server_name\" = :ServerName: AND \"counter_name\"='Batch Requests/sec'",
+						"query": "SELECT DERIVATIVE(\"cntr_value\") AS \"Batch Requests/sec\" FROM :InfluxDBName:.:RetentionPolicy:.\"SQL Statistics\" WHERE time > :dashboardTime:  AND \"server_name\" = :ServerName: AND \"database_name\" = :DatabaseName: AND \"application_intent\" = :ApplicationIntent: AND \"counter_name\"='Batch Requests/sec'",
 						"queryConfig": {
 							"database": "",
 							"measurement": "",
@@ -2516,11 +2516,11 @@
 								"tags": []
 							},
 							"areTagsAccepted": false,
-							"rawText": "SELECT DERIVATIVE(\"cntr_value\") AS \"Batch Requests/sec\" FROM :InfluxDBName:.:RetentionPolicy:.\"SQL Statistics\" WHERE time > :dashboardTime:  AND \"server_name\" = :ServerName: AND \"counter_name\"='Batch Requests/sec'",
+							"rawText": "SELECT DERIVATIVE(\"cntr_value\") AS \"Batch Requests/sec\" FROM :InfluxDBName:.:RetentionPolicy:.\"SQL Statistics\" WHERE time > :dashboardTime:  AND \"server_name\" = :ServerName: AND \"database_name\" = :DatabaseName: AND \"application_intent\" = :ApplicationIntent: AND \"counter_name\"='Batch Requests/sec'",
 							"range": null,
 							"shifts": null
 						},
-						"source": "",
+						"source": "/chronograf/v1/sources/2",
 						"type": "influxql"
 					}
 				],
@@ -2609,11 +2609,11 @@
 				"note": "",
 				"noteVisibility": "default",
 				"links": {
-					"self": "/chronograf/v1/dashboards/2/cells/80e3a68a-1b69-4e06-81a8-c90cace6ed38"
+					"self": "/chronograf/v1/dashboards/4/cells/3dfca818-b6ca-4673-bf18-9dd7a79c7b7f"
 				}
 			},
 			{
-				"i": "583e3a9e-3bdd-45a9-9f14-6039a05fd93e",
+				"i": "c09bd325-1bbc-4d93-8ebc-ae9108ba2be6",
 				"x": 4,
 				"y": 6,
 				"w": 2,
@@ -2621,7 +2621,7 @@
 				"name": "Memory Clerk",
 				"queries": [
 					{
-						"query": "SELECT \"size_kb\" * 1024 AS \"size_kb\" FROM :InfluxDBName:.:RetentionPolicy:.\"memoryclerk\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: GROUP BY \"type\"",
+						"query": "SELECT \"size_kb\" * 1024 AS \"size_kb\" FROM :InfluxDBName:.:RetentionPolicy:.\"memoryclerk\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND \"database_name\" = :DatabaseName: AND \"application_intent\" = :ApplicationIntent:  GROUP BY \"type\"",
 						"queryConfig": {
 							"database": "",
 							"measurement": "",
@@ -2633,11 +2633,11 @@
 								"tags": []
 							},
 							"areTagsAccepted": false,
-							"rawText": "SELECT \"size_kb\" * 1024 AS \"size_kb\" FROM :InfluxDBName:.:RetentionPolicy:.\"memoryclerk\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: GROUP BY \"type\"",
+							"rawText": "SELECT \"size_kb\" * 1024 AS \"size_kb\" FROM :InfluxDBName:.:RetentionPolicy:.\"memoryclerk\" WHERE time > :dashboardTime: AND \"server_name\" = :ServerName: AND \"database_name\" = :DatabaseName: AND \"application_intent\" = :ApplicationIntent:  GROUP BY \"type\"",
 							"range": null,
 							"shifts": null
 						},
-						"source": "",
+						"source": "/chronograf/v1/sources/2",
 						"type": "influxql"
 					}
 				],
@@ -2736,57 +2736,11 @@
 				"note": "",
 				"noteVisibility": "default",
 				"links": {
-					"self": "/chronograf/v1/dashboards/2/cells/583e3a9e-3bdd-45a9-9f14-6039a05fd93e"
+					"self": "/chronograf/v1/dashboards/4/cells/c09bd325-1bbc-4d93-8ebc-ae9108ba2be6"
 				}
 			}
 		],
 		"templates": [
-			{
-				"tempVar": ":ServerName:",
-				"values": [
-					{
-						"value": "MSSQL2008R2",
-						"type": "tagValue",
-						"selected": true
-					}
-				],
-				"id": "aa6af775-c9bf-437b-8e4c-f75df21594d1",
-				"type": "tagValues",
-				"label": "",
-				"query": {
-					"influxql": "SHOW TAG VALUES ON :database: FROM :measurement: WITH KEY=:tagKey:",
-					"db": "zaiba2",
-					"measurement": "Buffer Manager",
-					"tagKey": "server_name",
-					"fieldKey": ""
-				},
-				"links": {
-					"self": "/chronograf/v1/dashboards/2/templates/aa6af775-c9bf-437b-8e4c-f75df21594d1"
-				}
-			},
-			{
-				"tempVar": ":DatabaseName:",
-				"values": [
-					{
-						"value": "master",
-						"type": "tagValue",
-						"selected": true
-					}
-				],
-				"id": "4a47c49f-684d-4463-b4b2-cca8c59083f7",
-				"type": "tagValues",
-				"label": "",
-				"query": {
-					"influxql": "SHOW TAG VALUES ON :database: FROM :measurement: WITH KEY=:tagKey:",
-					"db": "zaiba2",
-					"measurement": "Buffer Manager",
-					"tagKey": "database_name",
-					"fieldKey": ""
-				},
-				"links": {
-					"self": "/chronograf/v1/dashboards/2/templates/4a47c49f-684d-4463-b4b2-cca8c59083f7"
-				}
-			},
 			{
 				"tempVar": ":InfluxDBName:",
 				"values": [
@@ -2806,7 +2760,7 @@
 					"fieldKey": ""
 				},
 				"links": {
-					"self": "/chronograf/v1/dashboards/2/templates/24f3a05b-8193-4712-a0c1-6a6324266714"
+					"self": "/chronograf/v1/dashboards/4/templates/24f3a05b-8193-4712-a0c1-6a6324266714"
 				}
 			},
 			{
@@ -2822,7 +2776,76 @@
 				"type": "text",
 				"label": "",
 				"links": {
-					"self": "/chronograf/v1/dashboards/2/templates/01baae74-e8a2-4fb6-bcd5-753a4b0bc889"
+					"self": "/chronograf/v1/dashboards/4/templates/01baae74-e8a2-4fb6-bcd5-753a4b0bc889"
+				}
+			},
+			{
+				"tempVar": ":ServerName:",
+				"values": [
+					{
+						"value": "hyperscaletest",
+						"type": "tagValue",
+						"selected": true
+					}
+				],
+				"id": "aa6af775-c9bf-437b-8e4c-f75df21594d1",
+				"type": "tagValues",
+				"label": "",
+				"query": {
+					"influxql": "SHOW TAG VALUES ON :database: FROM :measurement: WITH KEY=:tagKey:",
+					"db": "zaiba2",
+					"measurement": "Buffer Manager",
+					"tagKey": "server_name",
+					"fieldKey": ""
+				},
+				"links": {
+					"self": "/chronograf/v1/dashboards/4/templates/aa6af775-c9bf-437b-8e4c-f75df21594d1"
+				}
+			},
+			{
+				"tempVar": ":DatabaseName:",
+				"values": [
+					{
+						"value": "DB1",
+						"type": "tagValue",
+						"selected": true
+					}
+				],
+				"id": "4a47c49f-684d-4463-b4b2-cca8c59083f7",
+				"type": "tagValues",
+				"label": "",
+				"query": {
+					"influxql": "SHOW TAG VALUES ON :database: FROM :measurement: WITH KEY=:tagKey:",
+					"db": "zaiba2",
+					"measurement": "Buffer Manager",
+					"tagKey": "database_name",
+					"fieldKey": ""
+				},
+				"links": {
+					"self": "/chronograf/v1/dashboards/4/templates/4a47c49f-684d-4463-b4b2-cca8c59083f7"
+				}
+			},
+			{
+				"tempVar": ":ApplicationIntent:",
+				"values": [
+					{
+						"value": "ReadWrite",
+						"type": "tagValue",
+						"selected": true
+					}
+				],
+				"id": "4ad54830-6f19-4091-bb04-a7e5311b259d",
+				"type": "tagValues",
+				"label": "",
+				"query": {
+					"influxql": "SHOW TAG VALUES ON :database: FROM :measurement: WITH KEY=:tagKey:",
+					"db": "zaiba2",
+					"measurement": "Buffer Manager",
+					"tagKey": "application_intent",
+					"fieldKey": ""
+				},
+				"links": {
+					"self": "/chronograf/v1/dashboards/4/templates/4ad54830-6f19-4091-bb04-a7e5311b259d"
 				}
 			},
 			{
@@ -2832,7 +2855,7 @@
 				"type": "text",
 				"label": "",
 				"links": {
-					"self": "/chronograf/v1/dashboards/2/templates/22443b27-6066-44c7-8223-30051a3e0493"
+					"self": "/chronograf/v1/dashboards/4/templates/22443b27-6066-44c7-8223-30051a3e0493"
 				}
 			},
 			{
@@ -2842,16 +2865,16 @@
 				"type": "text",
 				"label": "",
 				"links": {
-					"self": "/chronograf/v1/dashboards/2/templates/44d83121-45c7-4e39-81e9-09aceaa5088a"
+					"self": "/chronograf/v1/dashboards/4/templates/44d83121-45c7-4e39-81e9-09aceaa5088a"
 				}
 			}
 		],
 		"name": "SQL Server Monitoring Dashboard \"Zaiba2\"",
 		"organization": "default",
 		"links": {
-			"self": "/chronograf/v1/dashboards/2",
-			"cells": "/chronograf/v1/dashboards/2/cells",
-			"templates": "/chronograf/v1/dashboards/2/templates"
+			"self": "/chronograf/v1/dashboards/4",
+			"cells": "/chronograf/v1/dashboards/4/cells",
+			"templates": "/chronograf/v1/dashboards/4/templates"
 		}
 	}
 }

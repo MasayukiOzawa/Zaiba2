@@ -72,7 +72,7 @@ FROM
 		sys.dm_os_performance_counters WITH(NOLOCK)
 ) AS T
 WHERE 
-	object_name IN('SQL Statistics', 'Buffer Manager', 'General Statistics', 'Locks', 'SQL Errors', 'Access Methods')
+	object_name IN('SQL Statistics', 'Buffer Manager', 'General Statistics', 'Locks', 'SQL Errors', 'Access Methods', 'Databases', 'HTTP Storage', 'Broker/DBM Transport', 'Database Replica', 'Availability Replica')
 OPTION (RECOMPILE, MAXDOP 1);
 "@
 
@@ -83,7 +83,8 @@ FROM
 (SELECT
     @@SERVERNAME AS server_name,
 	COALESCE(SERVERPROPERTY('InstanceName'), 'MSSQLSERVER') AS sql_instance_name,
-	DB_NAME(database_id) AS database_name,
+    DB_NAME() AS database_name,
+	DB_NAME(database_id) AS file_database_name,
 	file_id,
 	num_of_reads,
 	num_of_bytes_read,
@@ -95,9 +96,9 @@ FROM
 FROM 
 	sys.dm_io_virtual_file_stats(NULL, NULL)) AS T1 
 WHERE
-	database_name IS NOT NULL
+	file_database_name IS NOT NULL
 ORDER BY
-	database_name ASC, file_id ASC
+	file_database_name ASC, file_id ASC
 OPTION (RECOMPILE, MAXDOP 1);
 "@
 
@@ -295,6 +296,28 @@ WHERE  wait_time_ms > 1000
 GROUP  BY wait_category  
 OPTION (RECOMPILE, MAXDOP 1);
 "@
+
+$sql += @"
+SELECT
+    @@SERVERNAME AS server_name,
+    COALESCE(SERVERPROPERTY('InstanceName'), 'MSSQLSERVER') AS sql_instance_name,
+    DB_NAME() AS database_name, 
+	FILE_NAME([file_id]) AS [file_name],
+	/*
+	[total_page_count] * 8 / 1024 AS total_page_mb,
+	[allocated_extent_page_count] * 8 / 1024 AS allocated_extent_page_mb,
+	[modified_extent_page_count] * 8 / 1024 AS modified_extent_page_mb,
+	*/
+	[unallocated_extent_page_count] * 8 / 1024 AS unallocated_extent_page_mb,
+	[version_store_reserved_page_count] * 8 / 1024 AS version_store_reserved_page_mb,
+	[user_object_reserved_page_count] * 8 / 1024 AS [user_object_reserved_page_mb],
+	[internal_object_reserved_page_count] * 8 / 1024 AS internal_object_reserved_page_mb,
+	[mixed_extent_page_count] * 8 / 1024 AS mixed_extent_page_mb
+FROM
+	[tempdb].[sys].[dm_db_file_space_usage] WITH(NOLOCK)
+OPTION (RECOMPILE);
+"@
+
 ######################################################################################
 
 # https://docs.influxdata.com/influxdb/v1.7/tools/api/#write-http-endpoint
@@ -336,6 +359,7 @@ while($true){
     $ds.Tables[4].TableName = "workerthread"
     $ds.Tables[5].TableName = "waittask"
     $ds.Tables[6].TableName = "waitstats"
+    $ds.Tables[7].TableName = "tempdb"
 
     $timestamp = Get-TimeStamp
 
@@ -349,6 +373,7 @@ while($true){
             "instance_name" = ($row.instance_name -replace " ","\ ")
             "counter_name" = ($row.counter_name -replace " ","\ ")
             "cntr_type" = $row.cntr_type
+            "application_intent" = $mssql_application_intent
         }
 
         $fields = @{
@@ -366,7 +391,9 @@ while($true){
             "server_name"=($row.server_name -replace " ","\ ")
             "sql_instance_name" = ($row.sql_instance_name -replace " ","\ ")
             "database_name" = ($row.database_name -replace " ","\ ")
+            "file_database_name" = ($row.file_database_name -replace " ","\ ")
             "file_id" = $row.file_id
+            "application_intent" = $mssql_application_intent
         }
 
         $fields = @{
@@ -391,6 +418,7 @@ while($true){
             "sql_instance_name" = ($row.sql_instance_name -replace " ","\ ")
             "database_name" = ($row.database_name -replace " ","\ ")
             "instance_name" = ($row.instance_name -replace " ","\ ")
+            "application_intent" = $mssql_application_intent
         }
 
         $fields = @{
@@ -410,6 +438,7 @@ while($true){
             "database_name" = ($row.database_name -replace " ","\ ")
             "type" = ($row.type -replace " ","\ ")
             "name" = ($row.name -replace " ","\ ")
+            "application_intent" = $mssql_application_intent
         }
 
         $fields = @{
@@ -427,6 +456,7 @@ while($true){
             "server_name"=($row.server_name -replace " ","\ ")
             "sql_instance_name" = ($row.sql_instance_name -replace " ","\ ")
             "database_name" = ($row.database_name -replace " ","\ ")
+            "application_intent" = $mssql_application_intent
         }
 
         $fields = @{
@@ -455,6 +485,7 @@ while($true){
             "wait_type" = ($row.wait_type -replace " ","\ ")
             "host_name" = ($row.host_name -replace " ","\ ")
             "program_name" = ($row.program_name -replace " ","\ ")
+            "application_intent" = $mssql_application_intent
         }
 
         $fields = @{
@@ -475,7 +506,7 @@ while($true){
             "sql_instance_name" = ($row.sql_instance_name -replace " ","\ ")
             "database_name" = ($row.database_name -replace " ","\ ")
             "wait_category" = ($row.wait_category -replace " ","\ ")
-
+            "application_intent" = $mssql_application_intent
         }
 
         $fields = @{
@@ -488,6 +519,29 @@ while($true){
     }
     Write-LineData -baseuri $baseuri -data $data
 
+
+    $data = @()
+    foreach($row in $ds.Tables["tempdb"].Rows){
+        $measurement = "tempdb"
+        $tags = @{
+            "server_name"=($row.server_name -replace " ","\ ")
+            "sql_instance_name" = ($row.sql_instance_name -replace " ","\ ")
+            "database_name" = ($row.database_name -replace " ","\ ")
+            "file_name" = ($row.file_name -replace " ","\ ")
+            "application_intent" = $mssql_application_intent
+        }
+
+        $fields = @{
+            "unallocated_extent_page_mb" = $row.unallocated_extent_page_mb
+            "version_store_reserved_page_mb" = $row.version_store_reserved_page_mb
+            "user_object_reserved_page_mb" = $row.user_object_reserved_page_mb
+            "internal_object_reserved_page_mb" = $row.internal_object_reserved_page_mb
+            "mixed_extent_page_mb" = $row.mixed_extent_page_mb
+        }
+        $ret = New-LineData $measurement $tags $fields $timestamp
+        $data += $ret
+    }
+    Write-LineData -baseuri $baseuri -data $data
     $ds.Clear()
     $ds.Dispose()
     $ds = $null

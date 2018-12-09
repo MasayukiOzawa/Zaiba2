@@ -3,6 +3,7 @@ Param(
     $Zaiba2HOME = "C:\Zaiba2",
     $Zaiba2Script_uri = "https://raw.githubusercontent.com/MasayukiOzawa/Zaiba2/master/Scripts/Zaiba2.ps1",
     $Zaiba2DashBoard_uri = "https://raw.githubusercontent.com/MasayukiOzawa/Zaiba2/master/Chronograf/SQL%20Server%20Monitoring%20Dashboard%20_Zaiba2_.json",
+    $Nawaboard_uri = "https://raw.githubusercontent.com/MasayukiOzawa/Zaiba2/master/Chronograf/SQL%20Database%20Data%20Access%20Dashboard%20_Nawa%20Board_.json",
     $influxdb_uri = "https://dl.influxdata.com/influxdb/releases/influxdb-1.7.1_windows_amd64.zip",
     $chronograf_uri = "https://dl.influxdata.com/chronograf/releases/chronograf-1.7.3_windows_amd64.zip",
     $Kapacitor_uri = "https://dl.influxdata.com/kapacitor/releases/kapacitor-1.5.1_windows_amd64.zip"
@@ -25,9 +26,10 @@ If (!(Test-Path $tools_dir)){
 }
 
 # Download Zaiba2 Module
-Write-Zaiba2Log ("Download the module of Zaiba 2 from Github. ({0})" -f "Zaiba2.ps1, Zaiba2.json")
+Write-Zaiba2Log ("Download the module of Zaiba2 from Github. ({0})" -f "Zaiba2.ps1, Zaiba2.json, NawaBoard.json")
 (Invoke-WebRequest -Uri $Zaiba2Script_uri).Content | % { [Text.Encoding]::UTF8.GetBytes($_) } | Set-Content -Path (Join-Path $tools_dir "Zaiba2.ps1") -Encoding Byte
 (Invoke-WebRequest -Uri $Zaiba2DashBoard_uri).Content | % { [Text.Encoding]::UTF8.GetBytes($_) } | Set-Content -Path (Join-Path $tools_dir "Zaiba2.json") -Encoding Byte
+(Invoke-WebRequest -Uri $Nawaboard_uri).Content | % { [Text.Encoding]::UTF8.GetBytes($_) } | Set-Content -Path (Join-Path $tools_dir "NawaBoard.json") -Encoding Byte
 
 # Download Tick Stack
 Write-Zaiba2Log ("Download InfluxDB")
@@ -90,7 +92,6 @@ Invoke-Expression "$(Join-Path $influxdb_dir "influx.exe") -execute 'create data
 # Stop Influxd
 Stop-Job $influxdb_job
 $influxdb_job | Remove-Job
-
 
 # Display start command
 $chronograf = Get-Item (Join-Path $Zaiba2HOME "chronograf*\chronograf.exe")
